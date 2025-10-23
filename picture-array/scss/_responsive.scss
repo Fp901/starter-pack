@@ -1,0 +1,30 @@
+// _responsive.scss
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  #image-selection {
+    grid-template-columns: repeat(3, 1fr); // Adjust grid on smaller screens
+  }
+
+  .profile-box {
+    width: 100%;
+    margin: 10px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 10px;
+  }
+
+  #image-selection {
+    grid-template-columns: 1fr; // Stack images on very small screens
+  }
+
+  .profile-box {
+    width: 100%;
+  }
+}

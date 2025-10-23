@@ -1,18 +1,45 @@
+// _layout.scss
+
 .container {
-  width: 100%;
-  max-width: 320px; // Mobile-first
+  max-width: 900px;
   margin: 0 auto;
-  padding: 0 15px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-  @media (min-width: 768px) {
-    max-width: 740px; // iPad portrait
-  }
+h2,
+h3 {
+  text-align: center;
+}
 
-  @media (min-width: 992px) {
-    max-width: 960px; // iPad landscape
-  }
+form {
+  margin-bottom: 20px;
+}
 
-  @media (min-width: 1200px) {
-    max-width: 1140px; // Desktop
+input,
+button {
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button {
+  background-color: $primary-color;
+  color: white;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $secondary-color;
   }
+}
+
+#image-selection {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-top: 20px;
 }

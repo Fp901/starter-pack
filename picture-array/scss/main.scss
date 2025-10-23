@@ -1,8 +1,11 @@
-@import 'base';
-@import 'mixins';
-@import 'components';
+// main.scss
+
+@import "base"; // Global settings (colors, typography, reset)
+@import "layout"; // Layout-specific styles (containers, forms)
+@import "components"; // UI components (buttons, profile boxes, etc.)
+@import "responsive"; // Media queries for responsiveness
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }

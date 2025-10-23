@@ -1,21 +1,107 @@
-/* line 1, ../../../Desktop/Netmatters/site-replica/scss/_base.scss */
-* {
+/* line 10, ../../../Desktop/picture-array/picture-array/scss/_base.scss */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* line 7, ../../../Desktop/Netmatters/site-replica/scss/_base.scss */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+/* line 18, ../../../Desktop/picture-array/picture-array/scss/_base.scss */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  line-height: 1.6;
+  padding: 20px;
+  color: #333;
 }
 
-/* line 5, ../../../Desktop/Netmatters/site-replica/scss/main.scss */
+/* line 3, ../../../Desktop/picture-array/picture-array/scss/_layout.scss */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* line 12, ../../../Desktop/picture-array/picture-array/scss/_layout.scss */
+h2,
+h3 {
+  text-align: center;
+}
+
+/* line 17, ../../../Desktop/picture-array/picture-array/scss/_layout.scss */
+form {
+  margin-bottom: 20px;
+}
+
+/* line 21, ../../../Desktop/picture-array/picture-array/scss/_layout.scss */
+input,
+button {
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* line 30, ../../../Desktop/picture-array/picture-array/scss/_layout.scss */
+button {
+  background-color: #2c3e50;
+  color: white;
+  cursor: pointer;
+}
+
+/* line 35, ../../../Desktop/picture-array/picture-array/scss/_layout.scss */
+button:hover {
+  background-color: #34495e;
+}
+
+/* line 40, ../../../Desktop/picture-array/picture-array/scss/_layout.scss */
+#image-selection {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  /* line 4, ../../../Desktop/picture-array/picture-array/scss/_responsive.scss */
+  .container {
+    padding: 15px;
+  }
+  /* line 8, ../../../Desktop/picture-array/picture-array/scss/_responsive.scss */
+  #image-selection {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  /* line 12, ../../../Desktop/picture-array/picture-array/scss/_responsive.scss */
+  .profile-box {
+    width: 100%;
+    margin: 10px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  /* line 19, ../../../Desktop/picture-array/picture-array/scss/_responsive.scss */
+  .container {
+    padding: 10px;
+  }
+  /* line 23, ../../../Desktop/picture-array/picture-array/scss/_responsive.scss */
+  #image-selection {
+    grid-template-columns: 1fr;
+  }
+  /* line 27, ../../../Desktop/picture-array/picture-array/scss/_responsive.scss */
+  .profile-box {
+    width: 100%;
+  }
+}
+
+/* line 8, ../../../Desktop/picture-array/picture-array/scss/main.scss */
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 /*# sourceMappingURL=main.css.map */
