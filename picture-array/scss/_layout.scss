@@ -1,0 +1,18 @@
+.container {
+  width: 100%;
+  max-width: 320px; // Mobile-first
+  margin: 0 auto;
+  padding: 0 15px;
+
+  @media (min-width: 768px) {
+    max-width: 740px; // iPad portrait
+  }
+
+  @media (min-width: 992px) {
+    max-width: 960px; // iPad landscape
+  }
+
+  @media (min-width: 1200px) {
+    max-width: 1140px; // Desktop
+  }
+}
