@@ -1,14 +1,20 @@
 :root {
-  --bg: #f8fafc;
+  /* Base background + surface layers */
+  --bg: #f4f6f8;
   --panel: #ffffff;
-  --border: #e5e7eb;
-  --text: #1e293b;
-  --muted: #64748b;
+  --border: #d6d9df;
 
-  --primary: #1a73e8;
-  --primary-600: #1766cc;
+  /* Text colors */
+  --text: #1a1f2c;
+  --muted: #6c7280;
 
-  --focus: #80b3ff;
-  --shadow: 0 10px 20px rgba(2, 6, 23, 0.06);
-  --radius: 16px;
+  /* Enhanced corporate primary */
+  --primary: #2563eb;
+  --primary-600: #1d4ed8;
+  --primary-700: #1e40af;
+
+  /* State + UI utility */
+  --focus: #93c5fd;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --radius: 14px;
 }

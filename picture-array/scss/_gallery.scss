@@ -45,30 +45,26 @@
 .group summary .count {
   color: var(--muted);
   font-size: 0.95rem;
+  font-weight: 600;
 }
 
-/* Horizontal scroll row of thumbs */
+/* ✅ UPDATED: Thumbnails wrap in a responsive grid */
 .thumb-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   gap: 12px;
-  overflow-x: auto;
   padding: 12px;
-  scroll-snap-type: x mandatory;
-}
-.thumb-row:focus,
-.thumb-row:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--focus);
 }
 
+/* ✅ UPDATED: Clean thumbnail sizing */
 .thumb {
-  height: 120px;
-  width: auto;
-  flex: 0 0 auto;
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
   border-radius: 10px;
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
-  scroll-snap-align: start;
+  cursor: pointer;
 }
 
 .thumb-wrapper {

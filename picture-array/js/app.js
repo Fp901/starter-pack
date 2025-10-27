@@ -7,7 +7,8 @@ console.log(
   "use strict";
 
   const STORAGE_KEY = "emailImages.v1";
-  const API_KEY = "YOUR_PEXELS_API_KEY_HERE"; // <— Replace locally ONLY
+
+  const UNSPLASH_ACCESS_KEY = "EutaxUDh0GyczRPGpYk-KRUjCnzRHnPii8b0Fe4j6Uw";
 
   const imgEl = document.getElementById("currentImage");
   const imgSkeleton = document.getElementById("imgSkeleton");
@@ -37,7 +38,7 @@ console.log(
 
   console.log("🎬 Script initialized and UI ready.");
 
-  // ✅ Local Storage
+  // Local Storage
   function loadStore() {
     const raw = localStorage.getItem(STORAGE_KEY);
     return raw ? JSON.parse(raw) : { emailImages: {} };
@@ -48,7 +49,7 @@ console.log(
     console.log("💾 Store:", store);
   }
 
-  // ✅ Gallery Renderer
+  // Gallery Renderer
   function renderGallery() {
     console.log("🔁 Rendering gallery");
     const store = loadStore();
@@ -61,7 +62,7 @@ console.log(
       const details = document.createElement("details");
       const summary = document.createElement("summary");
       summary.innerHTML = `<span class="email">${email}</span>
-                           <span class="count">${urls.length} images</span>`;
+                           <span class="count">(${urls.length} images)</span>`;
 
       const row = document.createElement("div");
       row.className = "thumb-row";
@@ -76,14 +77,12 @@ console.log(
         img.alt = "assigned image";
         img.loading = "lazy";
 
-        // ✅ Lightbox open on double click
         img.addEventListener("dblclick", () => {
           slideshowImages = [...urls];
           slideshowIndex = idx;
           openLightbox();
         });
 
-        // ✅ Delete Button
         const delBtn = document.createElement("button");
         delBtn.className = "thumb-delete";
         delBtn.innerHTML = "✕";
@@ -112,47 +111,54 @@ console.log(
     });
   }
 
-  // ✅ Load New Random Image from Pexels
-  async function loadNewImage() {
-    console.log("🎞 Fetching Pexels image…");
+  // Load New Unsplash Image
+  function loadNewImage() {
+    console.log("🎞 Fetching Unsplash image…");
 
     imageFrame.classList.remove("ready");
     imgSkeleton.style.display = "block";
     imageMeta.textContent = "";
     statusEl.textContent = "Loading…";
 
-    try {
-      const res = await fetch(
-        "https://api.pexels.com/v1/search?query=nature&per_page=40",
-        { headers: { Authorization: API_KEY } }
-      );
+    const apiUrl =
+      "https://api.unsplash.com/photos/random?query=nature&orientation=landscape";
 
-      const data = await res.json();
-      const random =
-        data.photos[Math.floor(Math.random() * data.photos.length)];
+    fetch(apiUrl, {
+      headers: {
+        // Only use Access Key
+        Authorization: `Client-ID ${UNSPLASH_ACCESS_KEY}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        currentImageUrl = data.urls.regular;
+        imgEl.src = currentImageUrl;
 
-      currentImageUrl = random.src.large;
-      imgEl.src = currentImageUrl;
+        imgEl.onload = () => {
+          console.log("✅ Image loaded:", currentImageUrl);
+          imgSkeleton.style.display = "none";
+          imageFrame.classList.add("ready");
+          statusEl.textContent = "";
 
-      imgEl.onload = () => {
-        console.log("✅ Image loaded:", currentImageUrl);
+          // Required Unsplash attribution
+          imageMeta.innerHTML = `Photo by 
+            <a href="${data.user.links.html}?utm_source=ImageAssign&utm_medium=referral" 
+            target="_blank" rel="noopener">${data.user.name}</a> 
+            on Unsplash`;
+        };
+      })
+      .catch((err) => {
+        console.error("❌ Unsplash load failed", err);
+        const fallback = `https://placehold.co/600x400?text=No+Image`;
+        currentImageUrl = fallback;
+        imgEl.src = fallback;
         imgSkeleton.style.display = "none";
-        imageFrame.classList.add("ready");
-        imageMeta.textContent = `Photo by ${random.photographer} on Pexels`;
-        statusEl.textContent = "";
-      };
-    } catch (err) {
-      console.error("❌ Pexels load failed", err);
-      const fallback = `https://placehold.co/600x400?text=No+Image`;
-      currentImageUrl = fallback;
-      imgEl.src = fallback;
-      imgSkeleton.style.display = "none";
-      imageMeta.textContent = "Placeholder Image";
-      statusEl.textContent = "⚠️ Fallback used";
-    }
+        statusEl.textContent = "⚠️ Fallback used";
+        imageMeta.textContent = "Temporary placeholder image";
+      });
   }
 
-  // ✅ Assign Image
+  // Assign Image
   function handleAssign(email) {
     if (!currentImageUrl) return console.error("❌ No image loaded to assign");
 
@@ -168,20 +174,50 @@ console.log(
     emailInput.value = "";
   }
 
-  // ✅ Form Submit
+  // UI Listeners
+  // ✅ Fully Improved Email Validation & UI Update
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const email = emailInput.value.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      emailError.textContent = "Invalid email";
+
+    let email = emailInput.value.trim().toLowerCase();
+    console.log("✉️ Raw email input:", email);
+
+    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+
+    const isValid = emailPattern.test(email);
+    console.log("✅ Regex test result:", isValid);
+
+    if (!isValid) {
+      console.warn("⛔ Email failed validation:", email);
+
+      emailInput.classList.add("invalid");
+      emailInput.setAttribute("aria-invalid", "true");
+
       emailError.hidden = false;
+      emailError.style.display = "block";
+      emailError.textContent = "Please enter a valid email address.";
+
+      console.log("❌ Validation UI updated – stopped submission.");
       return;
     }
+
+    console.log("🎉 Email validated successfully:", email);
+
+    // ✅ Clear error UI
+    emailInput.classList.remove("invalid");
+    emailInput.setAttribute("aria-invalid", "false");
     emailError.hidden = true;
+    emailError.style.display = "none";
+
+    // ✅ Debug store before assign
+    console.log("📦 Store before update:", loadStore());
+
+    console.log("➡️ Calling handleAssign()...");
     handleAssign(email);
+
+    console.log("✅ Assign completed");
   });
 
-  // ✅ Button Controls
   skipBtn.addEventListener("click", loadNewImage);
   clearAllBtn.addEventListener("click", () => {
     if (!confirm("Clear all images?")) return;
@@ -190,7 +226,7 @@ console.log(
     loadNewImage();
   });
 
-  // ✅ Lightbox Controls
+  // Lightbox Controls
   function openLightbox() {
     lightboxImage.src = slideshowImages[slideshowIndex];
     lightbox.hidden = false;
@@ -226,7 +262,7 @@ console.log(
     if (e.key === "ArrowRight") showNext();
   });
 
-  // ✅ Init
+  // Initial Load
   renderGallery();
   loadNewImage();
 })();

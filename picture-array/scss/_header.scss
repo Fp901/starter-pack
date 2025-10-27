@@ -19,15 +19,16 @@
   gap: 12px;
 }
 
-.logo {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  display: grid;
-  place-items: center;
+.logo-circle {
+  width: 46px;
+  height: 46px;
   background: var(--primary);
   color: #fff;
-  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  border-radius: 50%;
   box-shadow: var(--shadow);
 }
 

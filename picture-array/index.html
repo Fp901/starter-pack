@@ -10,11 +10,11 @@
     <header class="site-header">
       <div class="container header-inner">
         <div class="brand">
-          <div class="logo" aria-hidden="true">IG</div>
+          <div class="logo logo-circle" aria-hidden="true">🐱</div>
           <div class="brand-text">
-            <h1 class="brand-title">Image Gen</h1>
+            <h1 class="brand-title">Image Generator</h1>
             <p class="brand-subtitle">
-              Assign Picsum images to email addresses
+              Assign unsplash images to email addresses
             </p>
           </div>
         </div>
@@ -47,16 +47,27 @@
               placeholder="name@example.com"
               required
               aria-describedby="emailHelp emailError"
+              aria-invalid="false"
             />
             <button type="submit" class="btn primary" id="assignBtn">
               Assign image
             </button>
             <button type="button" class="btn ghost" id="skipBtn">Skip</button>
           </div>
-          <small id="emailHelp" class="help"
-            >Your email is stored locally only.</small
+
+          <small id="emailHelp" class="help">
+            Your email is stored locally only.
+          </small>
+
+          <p
+            id="emailError"
+            class="error"
+            role="alert"
+            aria-live="assertive"
+            hidden
           >
-          <p id="emailError" class="error" role="alert" hidden></p>
+            Please enter a valid email address.
+          </p>
         </form>
 
         <div class="toolbar">
@@ -86,9 +97,9 @@
     <footer class="site-footer">
       <div class="container footer-inner">
         <p>
-          Built with
-          <a href="https://picsum.photos/" target="_blank" rel="noopener"
-            >Picsum</a
+          Photos from
+          <a href="https://unsplash.com" target="_blank" rel="noopener"
+            >Unsplash</a
           >
         </p>
       </div>
