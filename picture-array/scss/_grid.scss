@@ -1,0 +1,12 @@
+.main-grid {
+  display: grid;
+  gap: 18px;
+  padding: 18px 0 28px;
+}
+
+@media (min-width: 900px) {
+  .main-grid {
+    grid-template-columns: 1.1fr 1fr;
+    align-items: start;
+  }
+}

@@ -1,0 +1,34 @@
+.assign-form {
+  margin-top: 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+@media (min-width: 520px) {
+  .input-row {
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+  }
+}
+
+input[type="email"] {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  transition: border 160ms ease, box-shadow 160ms ease;
+}
+input[type="email"]:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--focus);
+}
+
+.toolbar {
+  margin-top: 10px;
+}

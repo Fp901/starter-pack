@@ -1,11 +1,10 @@
-// main.scss
-
-@import "base"; // Global settings (colors, typography, reset)
-@import "layout"; // Layout-specific styles (containers, forms)
-@import "components"; // UI components (buttons, profile boxes, etc.)
-@import "responsive"; // Media queries for responsiveness
-
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-}
+@import "variables";
+@import "reset";
+@import "global";
+@import "header";
+@import "grid";
+@import "footer";
+@import "image-frame";
+@import "buttons";
+@import "forms";
+@import "gallery";

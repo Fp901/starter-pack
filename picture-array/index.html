@@ -2,47 +2,118 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create Profiles</title>
-    <link rel="stylesheet" href="./css/main.css" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ImageAssign</title>
+    <link rel="stylesheet" href="/picture-array/css/main.css" />
   </head>
   <body>
-    <div class="container">
-      <!-- Email Form Section -->
-      <section class="email-section">
-        <h2>Create a Profile</h2>
-        <form id="email-form">
-          <label for="email">Email Address:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Enter a valid email"
-            required
-          />
-          <button type="submit">Create Profile</button>
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">IG</div>
+          <div class="brand-text">
+            <h1 class="brand-title">Image Gen</h1>
+            <p class="brand-subtitle">
+              Assign Picsum images to email addresses
+            </p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container main-grid">
+      <!-- Current Image & Assign Form -->
+      <section class="card current">
+        <h2 class="section-title">Current Image</h2>
+
+        <figure class="image-frame" aria-busy="true">
+          <div id="imgSkeleton" class="skeleton" aria-hidden="true"></div>
+          <img id="currentImage" alt="Random image from Picsum" />
+          <figcaption
+            id="imageMeta"
+            class="image-meta"
+            aria-live="polite"
+          ></figcaption>
+        </figure>
+
+        <form id="assignForm" class="assign-form" novalidate>
+          <label for="email">Email address</label>
+          <div class="input-row">
+            <input
+              id="email"
+              name="email"
+              type="email"
+              inputmode="email"
+              placeholder="name@example.com"
+              required
+              aria-describedby="emailHelp emailError"
+            />
+            <button type="submit" class="btn primary" id="assignBtn">
+              Assign image
+            </button>
+            <button type="button" class="btn ghost" id="skipBtn">Skip</button>
+          </div>
+          <small id="emailHelp" class="help"
+            >Your email is stored locally only.</small
+          >
+          <p id="emailError" class="error" role="alert" hidden></p>
         </form>
+
+        <div class="toolbar">
+          <button type="button" class="btn subtle" id="clearAllBtn">
+            Clear all data
+          </button>
+        </div>
+
+        <div id="status" class="status" role="status" aria-live="polite"></div>
       </section>
 
-      <!-- Image Selection Section -->
-      <section class="image-selection-section" style="display: none">
-        <h3>Select Images for Profile</h3>
-        <div id="image-selection">
-          <!-- Images will be displayed here -->
-        </div>
-        <button id="submit-images">Save Images</button>
-      </section>
+      <!-- Gallery -->
+      <section class="card gallery">
+        <h2 class="section-title">Assigned Images by Email</h2>
 
-      <!-- Profiles Section -->
-      <section class="profiles-section">
-        <h2>All Profiles</h2>
-        <div id="profiles-list">
-          <!-- Profiles will be displayed here -->
+        <div id="emptyState" class="empty">
+          <p>
+            No assignments yet. Assign the current image to an email to get
+            started.
+          </p>
         </div>
+
+        <div id="gallery" class="groups" aria-live="polite"></div>
       </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>
+          Built with
+          <a href="https://picsum.photos/" target="_blank" rel="noopener"
+            >Picsum</a
+          >
+        </p>
+      </div>
+    </footer>
+
+    <script src="./js/app.js" defer></script>
+    <!-- ✅ Lightbox Component -->
+    <div id="lightbox" class="lightbox" hidden aria-hidden="true">
+      <div class="lightbox-overlay"></div>
+
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close">
+        ✕
+      </button>
+      <button
+        class="lightbox-prev"
+        id="lightboxPrev"
+        aria-label="Previous image"
+      >
+        ←
+      </button>
+      <button class="lightbox-next" id="lightboxNext" aria-label="Next image">
+        →
+      </button>
+
+      <img id="lightboxImage" class="lightbox-image" alt="Large preview" />
     </div>
-
-    <script src="./js/app.js"></script>
   </body>
 </html>
