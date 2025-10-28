@@ -1,3 +1,11 @@
+/* --------------------------------------------------------------
+   Button Base Styles
+   --------------------------------------------------------------
+   Shared styling for all button types:
+   - Smooth transitions
+   - Solid click interaction
+   - Consistent shape & padding
+-------------------------------------------------------------- */
 .btn {
   appearance: none;
   border: 1px solid transparent;
@@ -8,38 +16,63 @@
   transition: transform 40ms ease, background 140ms ease, border 140ms ease,
     box-shadow 120ms ease;
 }
+
+/* Pressed / Active Feedback */
 .btn:active {
   transform: translateY(1px);
 }
 
+/* --------------------------------------------------------------
+   Primary Button
+   --------------------------------------------------------------
+   - Used for main call-to-actions (e.g., Assign image)
+   - Uses theme color variables for quick rebranding
+-------------------------------------------------------------- */
 .btn.primary {
   background: var(--primary);
   color: #fff;
   box-shadow: 0 6px 16px rgba(26, 115, 232, 0.25);
 }
+
 .btn.primary:hover {
   background: var(--primary-600);
 }
+
+/* Disabled state — prevents interaction */
 .btn.primary:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   box-shadow: none;
 }
 
+/* --------------------------------------------------------------
+   Ghost Button
+   --------------------------------------------------------------
+   - Minimal styling
+   - Ideal for secondary actions (e.g., Skip)
+-------------------------------------------------------------- */
 .btn.ghost {
   background: transparent;
   border-color: var(--border);
   color: var(--text);
 }
+
 .btn.ghost:hover {
   border-color: #cbd5e1;
 }
 
+/* --------------------------------------------------------------
+   Subtle Button
+   --------------------------------------------------------------
+   - Soft UI element
+   - Useful for utility actions (e.g., Clear All Data)
+-------------------------------------------------------------- */
 .btn.subtle {
   background: #f1f5f9;
   border-color: #e2e8f0;
   color: #0f172a;
 }
+
 .btn.subtle:hover {
   background: #e2e8f0;
 }

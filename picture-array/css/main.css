@@ -1,77 +1,143 @@
 @charset "UTF-8";
-/* line 1, ../../../Desktop/picture-array/picture-array/scss/_variables.scss */
+/* --------------------------------------------------------------
+   Design System Tokens (CSS Variables)
+   --------------------------------------------------------------
+   Centralized theme control for:
+   - Colors
+   - Borders
+   - Shadows
+   - Spacing + radii
+   - Interaction feedback
+   --------------------------------------------------------------
+   Changing values here automatically updates UI everywhere.
+-------------------------------------------------------------- */
+/* line 14, ../../../Desktop/picture-array/picture-array/scss/_variables.scss */
 :root {
-  /* Base background + surface layers */
+  /* ------------------------------------------------------------
+     Surface + Layout Colors
+     ------------------------------------------------------------
+     Hierarchy:
+     --bg     → general background behind cards
+     --panel  → foreground surface (cards, form areas)
+     --border → subtle structural separation
+  ------------------------------------------------------------ */
   --bg: #f4f6f8;
   --panel: #ffffff;
   --border: #d6d9df;
-  /* Text colors */
+  /* ------------------------------------------------------------
+     Typography Colors
+     ------------------------------------------------------------
+     --text  → primary readable body color
+     --muted → lower emphasis supporting text
+  ------------------------------------------------------------ */
   --text: #1a1f2c;
   --muted: #6c7280;
-  /* Enhanced corporate primary */
+  /* ------------------------------------------------------------
+     Brand Colors (Corporate Violet Theme)
+     ------------------------------------------------------------
+     --primary     → main action brand color
+     --primary-600 → hover state
+     --primary-700 → potential dark mode or emphasis
+  ------------------------------------------------------------ */
   --primary: #7c3aed;
-  /* Violet */
   --primary-600: #5b21b6;
   --primary-700: #1e40af;
-  /* State + UI utility */
+  /* ------------------------------------------------------------
+     UI Feedback + Depth
+     ------------------------------------------------------------
+     --focus  → high-visibility focus ring for accessibility
+     --shadow → unified elevation for panels + UI elements
+     --radius → consistent rounding scale for components
+  ------------------------------------------------------------ */
   --focus: #93c5fd;
   --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   --radius: 14px;
 }
 
-/* line 1, ../../../Desktop/picture-array/picture-array/scss/_reset.scss */
+/* --------------------------------------------------------------
+   Global Reset & Normalization
+   --------------------------------------------------------------
+   Goal:
+   - Remove inconsistent default browser styling
+   - Establish predictable rendering baseline
+-------------------------------------------------------------- */
+/* Ensure consistent box model sizing across all elements */
+/* line 10, ../../../Desktop/picture-array/picture-array/scss/_reset.scss */
 * {
   box-sizing: border-box;
 }
 
-/* line 4, ../../../Desktop/picture-array/picture-array/scss/_reset.scss */
+/* Remove default spacing + unify page layout start */
+/* line 15, ../../../Desktop/picture-array/picture-array/scss/_reset.scss */
 html,
 body {
   margin: 0;
   padding: 0;
 }
 
-/* line 9, ../../../Desktop/picture-array/picture-array/scss/_reset.scss */
+/* Images behave as responsive block elements */
+/* line 22, ../../../Desktop/picture-array/picture-array/scss/_reset.scss */
 img {
   display: block;
   max-width: 100%;
+  /* Avoid overflow issues */
 }
 
-/* line 13, ../../../Desktop/picture-array/picture-array/scss/_reset.scss */
+/* Inherit project typography into form controls for consistency */
+/* line 28, ../../../Desktop/picture-array/picture-array/scss/_reset.scss */
 button,
 input {
   font: inherit;
+  /* Prevent browser fallback fonts */
 }
 
-/* line 1, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
+/* --------------------------------------------------------------
+   Global Styles
+   --------------------------------------------------------------
+   Base design system foundation:
+   - Typography
+   - Background + text colors from CSS variables
+   - Smooth rendering + better readability
+-------------------------------------------------------------- */
+/* line 10, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
 body {
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   background-color: var(--bg);
+  /* Theme background */
   color: var(--text);
+  /* Primary readable text color */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
 }
 
-/* line 11, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
+/* Global link styling */
+/* line 21, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
 a {
   color: var(--primary);
   text-decoration: none;
 }
 
-/* line 15, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
+/* line 26, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
 a:hover {
   text-decoration: underline;
+  /* Subtle hover feedback */
 }
 
-/* line 19, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
+/* --------------------------------------------------------------
+   Layout Containers
+   --------------------------------------------------------------
+   Consistent responsive width and centered alignment
+-------------------------------------------------------------- */
+/* line 36, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
 .container {
   max-width: 1100px;
   width: 92%;
   margin: 0 auto;
 }
 
-/* line 25, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
+/* Base card style for panel-like UI components */
+/* line 43, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
 .card {
   background: var(--panel);
   border: 1px solid var(--border);
@@ -80,40 +146,56 @@ a:hover {
   padding: 16px;
 }
 
-/* line 33, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
+/* Section headings inside cards */
+/* line 52, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
 .section-title {
   margin: 0 0 12px;
   font-size: 1.1rem;
   font-weight: 600;
 }
 
-/* line 39, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
+/* Helper / instructional text */
+/* line 59, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
 .help {
   color: var(--muted);
   font-size: 0.9rem;
 }
 
-/* line 43, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
+/* Error states (form validation, etc.) */
+/* line 65, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
 .error {
   color: #b91c1c;
+  /* Accessible high contrast warning */
 }
 
-/* line 46, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
+/* Dynamic status messages under form */
+/* line 70, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
 .status {
   margin-top: 8px;
   min-height: 22px;
+  /* Prevents layout shift */
   color: var(--muted);
 }
 
-/* Focus visibility */
-/* line 53, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
+/* --------------------------------------------------------------
+   Accessibility: Focus Visibility
+   --------------------------------------------------------------
+   Applies only for keyboard navigation
+   Improves accessibility without affecting mouse users
+-------------------------------------------------------------- */
+/* line 83, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
 :focus-visible {
   outline: none;
   box-shadow: 0 0 0 3px var(--focus);
   border-radius: 8px;
 }
 
-/* line 59, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
+/* --------------------------------------------------------------
+   Layout: Sticky footer support
+   --------------------------------------------------------------
+   Make main content grow so footer stays at bottom
+-------------------------------------------------------------- */
+/* line 95, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
 html,
 body {
   height: 100%;
@@ -121,21 +203,32 @@ body {
   flex-direction: column;
 }
 
-/* line 66, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
+/* line 102, ../../../Desktop/picture-array/picture-array/scss/_global.scss */
 main {
   flex: 1;
+  /* Footer pushed to bottom */
 }
 
-/* line 1, ../../../Desktop/picture-array/picture-array/scss/_header.scss */
+/* --------------------------------------------------------------
+   Site Header
+   --------------------------------------------------------------
+   Purpose:
+   - Persistent branding area at the top of the page
+   - Sticky positioning for user convenience while scrolling
+-------------------------------------------------------------- */
+/* line 9, ../../../Desktop/picture-array/picture-array/scss/_header.scss */
 .site-header {
   background: #fff;
   border-bottom: 1px solid var(--border);
   position: sticky;
+  /* Keeps nav visible while scrolling */
   top: 0;
   z-index: 10;
+  /* Stays above content but below lightbox */
 }
 
-/* line 9, ../../../Desktop/picture-array/picture-array/scss/_header.scss */
+/* Layout wrapper inside header */
+/* line 18, ../../../Desktop/picture-array/picture-array/scss/_header.scss */
 .header-inner {
   display: flex;
   align-items: center;
@@ -143,14 +236,17 @@ main {
   padding: 14px 0;
 }
 
-/* line 16, ../../../Desktop/picture-array/picture-array/scss/_header.scss */
+/* Brand: logo + title block */
+/* line 26, ../../../Desktop/picture-array/picture-array/scss/_header.scss */
 .brand {
   display: flex;
   align-items: center;
   gap: 12px;
+  /* Spacing between logo + text */
 }
 
-/* line 22, ../../../Desktop/picture-array/picture-array/scss/_header.scss */
+/* Circular logo mark */
+/* line 33, ../../../Desktop/picture-array/picture-array/scss/_header.scss */
 .logo-circle {
   width: 46px;
   height: 46px;
@@ -160,44 +256,64 @@ main {
   align-items: center;
   justify-content: center;
   font-size: 26px;
+  /* Bold simplified branding */
   border-radius: 50%;
   box-shadow: var(--shadow);
 }
 
-/* line 35, ../../../Desktop/picture-array/picture-array/scss/_header.scss */
+/* Text identity: title + subheading */
+/* line 47, ../../../Desktop/picture-array/picture-array/scss/_header.scss */
 .brand-title {
   margin: 0;
   font-size: 1.2rem;
   font-weight: 700;
 }
 
-/* line 40, ../../../Desktop/picture-array/picture-array/scss/_header.scss */
+/* Optional supporting tagline */
+/* line 54, ../../../Desktop/picture-array/picture-array/scss/_header.scss */
 .brand-subtitle {
   margin: 0;
   color: var(--muted);
   font-size: 0.95rem;
 }
 
-/* Mobile First */
-/* line 2, ../../../Desktop/picture-array/picture-array/scss/_grid.scss */
+/* --------------------------------------------------------------
+   Main Grid Layout (Mobile First)
+   --------------------------------------------------------------
+   Structure:
+   - Stack vertically by default (mobile)
+   - Switch to two-column layout at wider breakpoints
+   - Content-first scaling for readability
+-------------------------------------------------------------- */
+/* line 10, ../../../Desktop/picture-array/picture-array/scss/_grid.scss */
 .main-grid {
   display: grid;
   gap: 18px;
   padding: 18px 0 28px;
 }
 
-/* Medium screens (tablet) */
+/* --------------------------------------------------------------
+   Medium Screens (Tablets ≥ 768px)
+   --------------------------------------------------------------
+   Slight increase in spacing for improved separation
+-------------------------------------------------------------- */
 @media (min-width: 768px) {
-  /* line 10, ../../../Desktop/picture-array/picture-array/scss/_grid.scss */
+  /* line 22, ../../../Desktop/picture-array/picture-array/scss/_grid.scss */
   .main-grid {
     gap: 22px;
     padding: 24px 0 32px;
   }
 }
 
-/* Desktop */
+/* --------------------------------------------------------------
+   Desktop Layout (≥ 900px)
+   --------------------------------------------------------------
+   Introduce two columns:
+   - Left side given more width for main image/form area
+   - Align content to the top for visual stability
+-------------------------------------------------------------- */
 @media (min-width: 900px) {
-  /* line 18, ../../../Desktop/picture-array/picture-array/scss/_grid.scss */
+  /* line 36, ../../../Desktop/picture-array/picture-array/scss/_grid.scss */
   .main-grid {
     grid-template-columns: 1.15fr 1fr;
     align-items: start;
@@ -205,113 +321,162 @@ main {
   }
 }
 
-/* Larger desktops 1200px+ */
+/* --------------------------------------------------------------
+   Large Desktop (≥ 1200px)
+   --------------------------------------------------------------
+   Increased spacing + slight font scaling to improve legibility
+-------------------------------------------------------------- */
 @media (min-width: 1200px) {
-  /* line 27, ../../../Desktop/picture-array/picture-array/scss/_grid.scss */
+  /* line 49, ../../../Desktop/picture-array/picture-array/scss/_grid.scss */
   .main-grid {
     grid-template-columns: 1.25fr 1fr;
     gap: 36px;
   }
-  /* line 32, ../../../Desktop/picture-array/picture-array/scss/_grid.scss */
+  /* line 54, ../../../Desktop/picture-array/picture-array/scss/_grid.scss */
   body {
     font-size: 1.08rem;
-    /* Subtle upscale */
+    /* Improved density on big displays */
   }
 }
 
-/* Ultra wide screens */
+/* --------------------------------------------------------------
+   Ultra-Wide Displays (≥ 1600px)
+   --------------------------------------------------------------
+   Further proportional growth without wasted whitespace
+-------------------------------------------------------------- */
 @media (min-width: 1600px) {
-  /* line 39, ../../../Desktop/picture-array/picture-array/scss/_grid.scss */
+  /* line 65, ../../../Desktop/picture-array/picture-array/scss/_grid.scss */
   .main-grid {
     grid-template-columns: 1.4fr 1fr;
     gap: 48px;
   }
-  /* line 44, ../../../Desktop/picture-array/picture-array/scss/_grid.scss */
+  /* line 70, ../../../Desktop/picture-array/picture-array/scss/_grid.scss */
   body {
     font-size: 1.16rem;
   }
 }
 
-/* line 1, ../../../Desktop/picture-array/picture-array/scss/_footer.scss */
+/* --------------------------------------------------------------
+   Site Footer
+   --------------------------------------------------------------
+   Purpose:
+   - Provide bottom attribution section
+   - Maintain branding consistency
+   - Subtle separation from main content
+-------------------------------------------------------------- */
+/* line 9, ../../../Desktop/picture-array/picture-array/scss/_footer.scss */
 .site-footer {
   border-top: 1px solid var(--border);
+  /* Visual divider */
   background: #fff;
+  /* Neutral background for readability */
   margin-top: 12px;
 }
 
-/* line 6, ../../../Desktop/picture-array/picture-array/scss/_footer.scss */
+/* Inner layout container */
+/* line 16, ../../../Desktop/picture-array/picture-array/scss/_footer.scss */
 .footer-inner {
   padding: 14px 0;
   color: var(--muted);
+  /* Soft text tone */
   font-size: 0.95rem;
+  /* Slightly reduced size */
   text-align: center;
 }
 
-/* line 12, ../../../Desktop/picture-array/picture-array/scss/_footer.scss */
+/* Footer links (Unsplash attribution, etc.) */
+/* line 24, ../../../Desktop/picture-array/picture-array/scss/_footer.scss */
 .footer-inner a {
   color: var(--primary);
+  /* Match brand theme */
   text-decoration: none;
 }
 
-/* line 16, ../../../Desktop/picture-array/picture-array/scss/_footer.scss */
+/* Hover interaction for better UX */
+/* line 30, ../../../Desktop/picture-array/picture-array/scss/_footer.scss */
 .footer-inner a:hover {
   text-decoration: underline;
 }
 
-/* line 1, ../../../Desktop/picture-array/picture-array/scss/_image-frame.scss */
+/* --------------------------------------------------------------
+   Responsive Image Frame
+   --------------------------------------------------------------
+   Purpose:
+   - Maintain consistent aspect ratio regardless of image source
+   - Provide container for loading skeleton + progressive reveal
+-------------------------------------------------------------- */
+/* line 8, ../../../Desktop/picture-array/picture-array/scss/_image-frame.scss */
 .image-frame {
   position: relative;
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 12px;
   background: #eef2f7;
+  /* Neutral placeholder */
   aspect-ratio: 16 / 10;
+  /* Base landscape aspect ratio */
 }
 
-/* line 10, ../../../Desktop/picture-array/picture-array/scss/_image-frame.scss */
+/* Ensure both image and skeleton fill the viewport area */
+/* line 18, ../../../Desktop/picture-array/picture-array/scss/_image-frame.scss */
 .image-frame img,
 .image-frame .skeleton {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Center crop maintains visual appeal */
 }
 
-/* line 17, ../../../Desktop/picture-array/picture-array/scss/_image-frame.scss */
+/* Progressive image reveal after load */
+/* line 26, ../../../Desktop/picture-array/picture-array/scss/_image-frame.scss */
 .image-frame img {
   opacity: 0;
   transition: opacity 240ms ease;
 }
 
-/* line 21, ../../../Desktop/picture-array/picture-array/scss/_image-frame.scss */
+/* line 30, ../../../Desktop/picture-array/picture-array/scss/_image-frame.scss */
 .image-frame.ready img {
   opacity: 1;
 }
 
-/* ✅ Improve visibility on small screens */
+/* --------------------------------------------------------------
+   Aspect Ratio Adjustments
+   --------------------------------------------------------------
+   Improves visual hierarchy across breakpoints:
+   - Smaller screens: slightly taller frame (more detail)
+   - Large screens: more cinematic panoramic feel
+-------------------------------------------------------------- */
+/* Small screens: taller ratio for better legibility */
 @media (max-width: 480px) {
-  /* line 27, ../../../Desktop/picture-array/picture-array/scss/_image-frame.scss */
+  /* line 44, ../../../Desktop/picture-array/picture-array/scss/_image-frame.scss */
   .image-frame {
     aspect-ratio: 16 / 12;
   }
 }
 
-/* ✅ More cinematic on large displays */
+/* Wide monitors: expanded landscape view */
 @media (min-width: 1400px) {
-  /* line 34, ../../../Desktop/picture-array/picture-array/scss/_image-frame.scss */
+  /* line 51, ../../../Desktop/picture-array/picture-array/scss/_image-frame.scss */
   .image-frame {
     aspect-ratio: 18 / 10;
   }
 }
 
-/* line 39, ../../../Desktop/picture-array/picture-array/scss/_image-frame.scss */
+/* Image credit styling below the frame */
+/* line 57, ../../../Desktop/picture-array/picture-array/scss/_image-frame.scss */
 .image-meta {
   margin: 10px 6px 0;
   color: var(--muted);
   font-size: 0.9rem;
 }
 
-/* Skeleton Shimmer */
-/* line 46, ../../../Desktop/picture-array/picture-array/scss/_image-frame.scss */
+/* --------------------------------------------------------------
+   Skeleton Loading Placeholder
+   --------------------------------------------------------------
+   - Used prior to full image download
+   - Shimmer animation communicates progress
+-------------------------------------------------------------- */
+/* line 69, ../../../Desktop/picture-array/picture-array/scss/_image-frame.scss */
 .skeleton {
   position: absolute;
   inset: 0;
@@ -321,6 +486,7 @@ main {
   animation: shimmer 1.2s infinite;
 }
 
+/* Sliding shimmer animation */
 @keyframes shimmer {
   0% {
     background-position: 100% 0;
@@ -330,7 +496,15 @@ main {
   }
 }
 
-/* line 1, ../../../Desktop/picture-array/picture-array/scss/_buttons.scss */
+/* --------------------------------------------------------------
+   Button Base Styles
+   --------------------------------------------------------------
+   Shared styling for all button types:
+   - Smooth transitions
+   - Solid click interaction
+   - Consistent shape & padding
+-------------------------------------------------------------- */
+/* line 9, ../../../Desktop/picture-array/picture-array/scss/_buttons.scss */
 .btn {
   appearance: none;
   border: 1px solid transparent;
@@ -341,77 +515,117 @@ main {
   transition: transform 40ms ease, background 140ms ease, border 140ms ease, box-shadow 120ms ease;
 }
 
-/* line 11, ../../../Desktop/picture-array/picture-array/scss/_buttons.scss */
+/* Pressed / Active Feedback */
+/* line 21, ../../../Desktop/picture-array/picture-array/scss/_buttons.scss */
 .btn:active {
   transform: translateY(1px);
 }
 
-/* line 15, ../../../Desktop/picture-array/picture-array/scss/_buttons.scss */
+/* --------------------------------------------------------------
+   Primary Button
+   --------------------------------------------------------------
+   - Used for main call-to-actions (e.g., Assign image)
+   - Uses theme color variables for quick rebranding
+-------------------------------------------------------------- */
+/* line 31, ../../../Desktop/picture-array/picture-array/scss/_buttons.scss */
 .btn.primary {
   background: var(--primary);
   color: #fff;
   box-shadow: 0 6px 16px rgba(26, 115, 232, 0.25);
 }
 
-/* line 20, ../../../Desktop/picture-array/picture-array/scss/_buttons.scss */
+/* line 37, ../../../Desktop/picture-array/picture-array/scss/_buttons.scss */
 .btn.primary:hover {
   background: var(--primary-600);
 }
 
-/* line 23, ../../../Desktop/picture-array/picture-array/scss/_buttons.scss */
+/* Disabled state — prevents interaction */
+/* line 42, ../../../Desktop/picture-array/picture-array/scss/_buttons.scss */
 .btn.primary:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   box-shadow: none;
 }
 
-/* line 29, ../../../Desktop/picture-array/picture-array/scss/_buttons.scss */
+/* --------------------------------------------------------------
+   Ghost Button
+   --------------------------------------------------------------
+   - Minimal styling
+   - Ideal for secondary actions (e.g., Skip)
+-------------------------------------------------------------- */
+/* line 54, ../../../Desktop/picture-array/picture-array/scss/_buttons.scss */
 .btn.ghost {
   background: transparent;
   border-color: var(--border);
   color: var(--text);
 }
 
-/* line 34, ../../../Desktop/picture-array/picture-array/scss/_buttons.scss */
+/* line 60, ../../../Desktop/picture-array/picture-array/scss/_buttons.scss */
 .btn.ghost:hover {
   border-color: #cbd5e1;
 }
 
-/* line 38, ../../../Desktop/picture-array/picture-array/scss/_buttons.scss */
+/* --------------------------------------------------------------
+   Subtle Button
+   --------------------------------------------------------------
+   - Soft UI element
+   - Useful for utility actions (e.g., Clear All Data)
+-------------------------------------------------------------- */
+/* line 70, ../../../Desktop/picture-array/picture-array/scss/_buttons.scss */
 .btn.subtle {
   background: #f1f5f9;
   border-color: #e2e8f0;
   color: #0f172a;
 }
 
-/* line 43, ../../../Desktop/picture-array/picture-array/scss/_buttons.scss */
+/* line 76, ../../../Desktop/picture-array/picture-array/scss/_buttons.scss */
 .btn.subtle:hover {
   background: #e2e8f0;
 }
 
-/* line 1, ../../../Desktop/picture-array/picture-array/scss/_forms.scss */
+/* --------------------------------------------------------------
+   Assignment Form Styles
+   --------------------------------------------------------------
+   Purpose:
+   - Handle layout and input styles for email entry + buttons
+   - Ensure good spacing and accessibility
+-------------------------------------------------------------- */
+/* line 9, ../../../Desktop/picture-array/picture-array/scss/_forms.scss */
 .assign-form {
   margin-top: 14px;
   display: grid;
   gap: 8px;
+  /* Consistent spacing between form elements */
 }
 
-/* line 7, ../../../Desktop/picture-array/picture-array/scss/_forms.scss */
+/* Container for input + action buttons */
+/* line 16, ../../../Desktop/picture-array/picture-array/scss/_forms.scss */
 .input-row {
   display: grid;
   grid-template-columns: 1fr;
+  /* Full width input by default */
   gap: 8px;
 }
 
+/* Enhanced layout on wider screens */
 @media (min-width: 520px) {
-  /* line 13, ../../../Desktop/picture-array/picture-array/scss/_forms.scss */
+  /* line 24, ../../../Desktop/picture-array/picture-array/scss/_forms.scss */
   .input-row {
     grid-template-columns: 1fr auto auto;
+    /* Input + 2 buttons (Assign + Skip) */
     align-items: center;
+    /* Vertically align elements */
   }
 }
 
-/* line 19, ../../../Desktop/picture-array/picture-array/scss/_forms.scss */
+/* --------------------------------------------------------------
+   Email Input Field
+   --------------------------------------------------------------
+   Usability & Accessibility:
+   - Large padding for touch targets
+   - Clear focus ring for keyboard users
+-------------------------------------------------------------- */
+/* line 38, ../../../Desktop/picture-array/picture-array/scss/_forms.scss */
 input[type="email"] {
   width: 100%;
   padding: 12px 14px;
@@ -421,13 +635,17 @@ input[type="email"] {
   transition: border 160ms ease, box-shadow 160ms ease;
 }
 
-/* line 27, ../../../Desktop/picture-array/picture-array/scss/_forms.scss */
+/* Focus state: communicates active interaction */
+/* line 48, ../../../Desktop/picture-array/picture-array/scss/_forms.scss */
 input[type="email"]:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px var(--focus);
 }
 
-/* line 32, ../../../Desktop/picture-array/picture-array/scss/_forms.scss */
+/* --------------------------------------------------------------
+   Utility Toolbar (Clear Data button row)
+-------------------------------------------------------------- */
+/* line 56, ../../../Desktop/picture-array/picture-array/scss/_forms.scss */
 .toolbar {
   margin-top: 10px;
 }

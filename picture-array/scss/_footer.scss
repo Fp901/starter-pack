@@ -1,18 +1,32 @@
+/* --------------------------------------------------------------
+   Site Footer
+   --------------------------------------------------------------
+   Purpose:
+   - Provide bottom attribution section
+   - Maintain branding consistency
+   - Subtle separation from main content
+-------------------------------------------------------------- */
 .site-footer {
-  border-top: 1px solid var(--border);
-  background: #fff;
+  border-top: 1px solid var(--border); /* Visual divider */
+  background: #fff; /* Neutral background for readability */
   margin-top: 12px;
 }
+
+/* Inner layout container */
 .footer-inner {
   padding: 14px 0;
-  color: var(--muted);
-  font-size: 0.95rem;
+  color: var(--muted); /* Soft text tone */
+  font-size: 0.95rem; /* Slightly reduced size */
   text-align: center;
 }
+
+/* Footer links (Unsplash attribution, etc.) */
 .footer-inner a {
-  color: var(--primary);
+  color: var(--primary); /* Match brand theme */
   text-decoration: none;
 }
+
+/* Hover interaction for better UX */
 .footer-inner a:hover {
   text-decoration: underline;
 }

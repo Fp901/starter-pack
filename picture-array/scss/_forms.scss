@@ -1,20 +1,39 @@
+/* --------------------------------------------------------------
+   Assignment Form Styles
+   --------------------------------------------------------------
+   Purpose:
+   - Handle layout and input styles for email entry + buttons
+   - Ensure good spacing and accessibility
+-------------------------------------------------------------- */
+
 .assign-form {
   margin-top: 14px;
   display: grid;
+  gap: 8px; /* Consistent spacing between form elements */
+}
+
+/* Container for input + action buttons */
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr; /* Full width input by default */
   gap: 8px;
 }
 
-.input-row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 8px;
-}
+/* Enhanced layout on wider screens */
 @media (min-width: 520px) {
   .input-row {
-    grid-template-columns: 1fr auto auto;
-    align-items: center;
+    grid-template-columns: 1fr auto auto; /* Input + 2 buttons (Assign + Skip) */
+    align-items: center; /* Vertically align elements */
   }
 }
+
+/* --------------------------------------------------------------
+   Email Input Field
+   --------------------------------------------------------------
+   Usability & Accessibility:
+   - Large padding for touch targets
+   - Clear focus ring for keyboard users
+-------------------------------------------------------------- */
 
 input[type="email"] {
   width: 100%;
@@ -24,11 +43,16 @@ input[type="email"] {
   border: 1px solid var(--border);
   transition: border 160ms ease, box-shadow 160ms ease;
 }
+
+/* Focus state: communicates active interaction */
 input[type="email"]:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px var(--focus);
 }
 
+/* --------------------------------------------------------------
+   Utility Toolbar (Clear Data button row)
+-------------------------------------------------------------- */
 .toolbar {
   margin-top: 10px;
 }
