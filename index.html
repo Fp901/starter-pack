@@ -44,7 +44,11 @@
         <!-- Progressive-loaded image frame -->
         <figure class="image-frame" aria-busy="true">
           <div id="imgSkeleton" class="skeleton" aria-hidden="true"></div>
-          <img id="currentImage" alt="Random image" />
+          <img
+            id="currentImage"
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAP///////ywAAAAAAQABAAACAkQBADs="
+            alt="Random image will load here"
+          />
           <figcaption
             id="imageMeta"
             class="image-meta"
@@ -161,7 +165,12 @@
       </button>
 
       <!-- Full-size preview image -->
-      <img id="lightboxImage" class="lightbox-image" alt="Large preview" />
+      <img
+        id="lightboxImage"
+        class="lightbox-image"
+        alt="Large preview"
+        src="data:image/gif;base64,R0lGODlhAQABAIAAAP///////ywAAAAAAQABAAACAkQBADs="
+      />
     </div>
   </body>
 </html>

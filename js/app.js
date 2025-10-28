@@ -192,7 +192,16 @@ console.log("Script loaded & running.");
     const store = loadStore();
     const key = email.toLowerCase();
 
-    if (!store.emailImages[key]) store.emailImages[key] = [];
+    if (!store.emailImages[key]) {
+      store.emailImages[key] = [];
+    }
+
+    // ✅ Prevent duplicate assignment
+    if (store.emailImages[key].includes(currentImageUrl)) {
+      statusEl.textContent = "That image is already assigned to this email ❌";
+      return;
+    }
+
     store.emailImages[key].push(currentImageUrl);
 
     saveStore(store);
