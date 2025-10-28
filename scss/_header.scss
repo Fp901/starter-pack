@@ -1,0 +1,58 @@
+/* --------------------------------------------------------------
+   Site Header
+   --------------------------------------------------------------
+   Purpose:
+   - Persistent branding area at the top of the page
+   - Sticky positioning for user convenience while scrolling
+-------------------------------------------------------------- */
+
+.site-header {
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  position: sticky; /* Keeps nav visible while scrolling */
+  top: 0;
+  z-index: 10; /* Stays above content but below lightbox */
+}
+
+/* Layout wrapper inside header */
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+}
+
+/* Brand: logo + title block */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Spacing between logo + text */
+}
+
+/* Circular logo mark */
+.logo-circle {
+  width: 46px;
+  height: 46px;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px; /* Bold simplified branding */
+  border-radius: 50%;
+  box-shadow: var(--shadow);
+}
+
+/* Text identity: title + subheading */
+.brand-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* Optional supporting tagline */
+.brand-subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}

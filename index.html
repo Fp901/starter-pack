@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Metadata + Responsive Scaling -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Title shown in browser tab -->
+    <title>ImageAssign</title>
+
+    <!-- Global compiled stylesheet -->
+    <link rel="stylesheet" href="./css/main.css" />
+  </head>
+
+  <body>
+    <!-- ==========================================================
+         Sticky Page Header with Branding
+    =========================================================== -->
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="brand">
+          <!-- Simple logo mark for identity -->
+          <div class="logo logo-circle" aria-hidden="true">🐱</div>
+
+          <!-- Product title + purpose -->
+          <div class="brand-text">
+            <h1 class="brand-title">Image Generator</h1>
+            <p class="brand-subtitle">
+              Assign unsplash images to email addresses
+            </p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ==========================================================
+         Main Application Layout: Image + Form + Gallery
+    =========================================================== -->
+    <main class="container main-grid">
+      <!-- Current Image + Assign Form Panel -->
+      <section class="card current">
+        <h2 class="section-title">Current Image</h2>
+
+        <!-- Progressive-loaded image frame -->
+        <figure class="image-frame" aria-busy="true">
+          <div id="imgSkeleton" class="skeleton" aria-hidden="true"></div>
+          <img id="currentImage" alt="Random image" />
+          <figcaption
+            id="imageMeta"
+            class="image-meta"
+            aria-live="polite"
+          ></figcaption>
+        </figure>
+
+        <!-- Email assignment form -->
+        <form id="assignForm" class="assign-form" novalidate>
+          <label for="email">Email address</label>
+
+          <div class="input-row">
+            <input
+              id="email"
+              name="email"
+              type="email"
+              inputmode="email"
+              placeholder="name@example.com"
+              required
+              aria-describedby="emailHelp emailError"
+              aria-invalid="false"
+            />
+
+            <!-- Primary submission action -->
+            <button type="submit" class="btn primary" id="assignBtn">
+              Assign image
+            </button>
+
+            <!-- Skip current image without saving -->
+            <button type="button" class="btn ghost" id="skipBtn">Skip</button>
+          </div>
+
+          <small id="emailHelp" class="help">
+            Your email is stored locally only.
+          </small>
+
+          <!-- Inline validation error feedback -->
+          <p
+            id="emailError"
+            class="error"
+            role="alert"
+            aria-live="assertive"
+            hidden
+          >
+            Please enter a valid email address.
+          </p>
+        </form>
+
+        <!-- Utility action row -->
+        <div class="toolbar">
+          <button type="button" class="btn subtle" id="clearAllBtn">
+            Clear all data
+          </button>
+        </div>
+
+        <!-- Status messaging area -->
+        <div id="status" class="status" role="status" aria-live="polite"></div>
+      </section>
+
+      <!-- ========================================================
+           Assigned Gallery - Grouped by Email
+      ========================================================= -->
+      <section class="card gallery">
+        <h2 class="section-title">Assigned Images by Email</h2>
+
+        <!-- Empty-state shown before first assignment -->
+        <div id="emptyState" class="empty">
+          <p>No assignments yet. Assign an image to begin.</p>
+        </div>
+
+        <!-- Groups container, dynamically rendered by JS -->
+        <div id="gallery" class="groups" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <!-- ==========================================================
+         Page Footer with Attribution
+    =========================================================== -->
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>
+          Photos from
+          <a href="https://unsplash.com" target="_blank" rel="noopener">
+            Unsplash
+          </a>
+        </p>
+      </div>
+    </footer>
+
+    <!-- ==========================================================
+         Application Script Loader
+    =========================================================== -->
+    <script src="./js/app.js" defer></script>
+
+    <!-- ==========================================================
+         Lightbox Component (Hidden until activated)
+    =========================================================== -->
+    <div id="lightbox" class="lightbox" hidden aria-hidden="true">
+      <div class="lightbox-overlay"></div>
+
+      <!-- Close / Nav Controls -->
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close">
+        ✕
+      </button>
+      <button
+        class="lightbox-prev"
+        id="lightboxPrev"
+        aria-label="Previous image"
+      >
+        ←
+      </button>
+      <button class="lightbox-next" id="lightboxNext" aria-label="Next image">
+        →
+      </button>
+
+      <!-- Full-size preview image -->
+      <img id="lightboxImage" class="lightbox-image" alt="Large preview" />
+    </div>
+  </body>
+</html>
