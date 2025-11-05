@@ -19,14 +19,11 @@
     <header class="site-header">
       <div class="container header-inner">
         <div class="brand">
-          <!-- Simple logo mark for identity -->
           <div class="logo logo-circle" aria-hidden="true">🐱</div>
-
-          <!-- Product title + purpose -->
           <div class="brand-text">
             <h1 class="brand-title">Image Generator</h1>
             <p class="brand-subtitle">
-              Assign unsplash images to email addresses
+              Assign Unsplash images to email addresses
             </p>
           </div>
         </div>
@@ -61,16 +58,21 @@
           <label for="email">Email address</label>
 
           <div class="input-row">
+            <!-- 🔹 Email input now supports dropdown of previous emails -->
             <input
               id="email"
               name="email"
               type="email"
+              list="emailList"
               inputmode="email"
               placeholder="name@example.com"
               required
               aria-describedby="emailHelp emailError"
               aria-invalid="false"
             />
+
+            <!-- 🆕 Datalist dynamically populated via JS -->
+            <datalist id="emailList"></datalist>
 
             <!-- Primary submission action -->
             <button type="submit" class="btn primary" id="assignBtn">
@@ -114,12 +116,10 @@
       <section class="card gallery">
         <h2 class="section-title">Assigned Images by Email</h2>
 
-        <!-- Empty-state shown before first assignment -->
         <div id="emptyState" class="empty">
           <p>No assignments yet. Assign an image to begin.</p>
         </div>
 
-        <!-- Groups container, dynamically rendered by JS -->
         <div id="gallery" class="groups" aria-live="polite"></div>
       </section>
     </main>
@@ -137,11 +137,6 @@
         </p>
       </div>
     </footer>
-
-    <!-- ==========================================================
-         Application Script Loader
-    =========================================================== -->
-    <script src="./js/app.js" defer></script>
 
     <!-- ==========================================================
          Lightbox Component (Hidden until activated)
@@ -172,5 +167,9 @@
         src="data:image/gif;base64,R0lGODlhAQABAIAAAP///////ywAAAAAAQABAAACAkQBADs="
       />
     </div>
+    <!-- ==========================================================
+         Application Script Loader
+    =========================================================== -->
+    <script src="./js/app.js" defer></script>
   </body>
 </html>

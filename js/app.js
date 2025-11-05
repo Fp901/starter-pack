@@ -1,19 +1,7 @@
 /**
  * ImageAssign Application Script
  * ---------------------------------
- * Core functionality:
- *  - Fetch random nature images from Unsplash (batch-loaded)
- *  - Assign selected images to user-provided email addresses
- *  - Store history in localStorage
- *  - Display grouped thumbnails per email
- *  - Lightbox preview (prev/next navigation)
- *
- *  Performance:
- *   ✔ Batched API calls to avoid Unsplash rate limiting
- *   ✔ Cached images allow near-instant switching
  */
-
-console.log("Script loaded & running.");
 
 (function () {
   "use strict";
@@ -21,25 +9,22 @@ console.log("Script loaded & running.");
   /* --------------------------------------------------------------
    * Configuration
    * ------------------------------------------------------------ */
-
   const STORAGE_KEY = "emailImages.v1";
   const UNSPLASH_ACCESS_KEY = "EutaxUDh0GyczRPGpYk-KRUjCnzRHnPii8b0Fe4j6Uw";
+  const DEBUG = false; // set to true for dev logging
 
   /* --------------------------------------------------------------
-   * Cached state
+   * State
    * ------------------------------------------------------------ */
-
-  let cachedImages = []; // Stored batch of loaded Unsplash data
-  let isFetchingBatch = false; // Prevents duplicate fetch calls
+  let cachedImages = [];
+  let isFetchingBatch = false;
   let currentImageUrl = null;
-
   let slideshowImages = [];
   let slideshowIndex = 0;
 
   /* --------------------------------------------------------------
    * DOM Elements
    * ------------------------------------------------------------ */
-
   const imgEl = document.getElementById("currentImage");
   const imgSkeleton = document.getElementById("imgSkeleton");
   const imageFrame = document.querySelector(".image-frame");
@@ -62,12 +47,11 @@ console.log("Script loaded & running.");
   const lightboxPrev = document.getElementById("lightboxPrev");
   const lightboxNext = document.getElementById("lightboxNext");
 
-  console.log("DOM initialized.");
+  if (DEBUG) console.log("DOM initialized.");
 
   /* --------------------------------------------------------------
    * LocalStorage Helpers
    * ------------------------------------------------------------ */
-
   function loadStore() {
     const raw = localStorage.getItem(STORAGE_KEY);
     return raw ? JSON.parse(raw) : { emailImages: {} };
@@ -75,48 +59,14 @@ console.log("Script loaded & running.");
 
   function saveStore(store) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
-    console.log("Store updated:", store);
+    if (DEBUG) console.log("Store updated:", store);
   }
 
   /* --------------------------------------------------------------
-   * Email Validation & Submission
+   * Preload Unsplash Images
    * ------------------------------------------------------------ */
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const email = emailInput.value.trim().toLowerCase();
-    console.log("Submitted email:", email);
-
-    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
-
-    if (!emailPattern.test(email)) {
-      console.warn("Invalid email:", email);
-      emailInput.classList.add("invalid");
-      emailInput.setAttribute("aria-invalid", "true");
-      emailError.hidden = false;
-      emailError.style.display = "block";
-      emailError.textContent = "Please enter a valid email address.";
-      return;
-    }
-
-    emailInput.classList.remove("invalid");
-    emailInput.setAttribute("aria-invalid", "false");
-    emailError.hidden = true;
-    emailError.style.display = "none";
-
-    handleAssign(email);
-  });
-
-  /* --------------------------------------------------------------
-   * Preload a batch of Unsplash images
-   * Called automatically when cache is low
-   * ------------------------------------------------------------ */
-
   async function preloadImages() {
     if (isFetchingBatch || cachedImages.length > 5) return;
-
-    console.log("Preloading a batch from Unsplash…");
     isFetchingBatch = true;
 
     try {
@@ -128,11 +78,9 @@ console.log("Script loaded & running.");
           },
         }
       );
-
       if (!res.ok) throw new Error(res.status);
 
       const data = await res.json();
-
       const newImages = data.results.map((p) => ({
         url: p.urls.regular,
         credit: {
@@ -142,29 +90,30 @@ console.log("Script loaded & running.");
       }));
 
       cachedImages.push(...newImages);
-      console.log(`Added ${newImages.length} → Cached: ${cachedImages.length}`);
+      if (DEBUG)
+        console.log(
+          `Added ${newImages.length} → Cached: ${cachedImages.length}`
+        );
     } catch (err) {
-      console.error("Batch preload failed:", err);
+      if (DEBUG) console.error("Batch preload failed:", err);
     } finally {
       isFetchingBatch = false;
     }
   }
 
   /* --------------------------------------------------------------
-   * Load next image from cache into main UI
-   * Falls back if no images available
+   * Load New Image
    * ------------------------------------------------------------ */
-
   async function loadNewImage() {
     await preloadImages();
 
     if (cachedImages.length === 0) {
-      console.warn("Cache empty. Using fallback.");
+      if (DEBUG) console.warn("Cache empty. Using fallback.");
       const fallback = `https://placehold.co/600x400?text=No+Image`;
       currentImageUrl = fallback;
       imgEl.src = fallback;
       imgSkeleton.style.display = "none";
-      imageMeta.textContent = "Temporary placeholder image";
+      imageMeta.textContent = "Placeholder image";
       return;
     }
 
@@ -178,43 +127,82 @@ console.log("Script loaded & running.");
       imageMeta.innerHTML = `Photo by <a href="${next.credit.link}" target="_blank" rel="noopener">${next.credit.name}</a> on Unsplash`;
     };
 
-    // Continue filling cache proactively
-    preloadImages();
+    preloadImages(); // keep cache topped up
   }
 
   /* --------------------------------------------------------------
-   * Assign image to an email address
+   * Populate Dropdown (existing emails)
    * ------------------------------------------------------------ */
+  function populateEmailDropdown() {
+    const store = loadStore();
+    const emails = Object.keys(store.emailImages);
 
+    let list = document.getElementById("emailList");
+    if (!list) {
+      list = document.createElement("datalist");
+      list.id = "emailList";
+      emailInput.setAttribute("list", "emailList");
+      document.body.appendChild(list);
+    }
+
+    list.innerHTML = "";
+    emails.forEach((email) => {
+      const option = document.createElement("option");
+      option.value = email;
+      list.appendChild(option);
+    });
+  }
+
+  /* --------------------------------------------------------------
+   * Handle Assign
+   * ------------------------------------------------------------ */
   function handleAssign(email) {
-    if (!currentImageUrl) return console.error("No image loaded to assign.");
+    if (!currentImageUrl) {
+      if (DEBUG) console.error("No image loaded to assign.");
+      return;
+    }
 
     const store = loadStore();
     const key = email.toLowerCase();
 
-    if (!store.emailImages[key]) {
-      store.emailImages[key] = [];
-    }
+    if (!store.emailImages[key]) store.emailImages[key] = [];
 
-    // ✅ Prevent duplicate assignment
+    // Avoid duplicates
     if (store.emailImages[key].includes(currentImageUrl)) {
-      statusEl.textContent = "That image is already assigned to this email ❌";
+      statusEl.textContent = "This image is already assigned to this email.";
       return;
     }
 
     store.emailImages[key].push(currentImageUrl);
-
     saveStore(store);
     renderGallery();
-    loadNewImage();
-    statusEl.textContent = `Assigned to ${email}`;
-    emailInput.value = "";
+
+    // ✅ Keep same image visible so it can be assigned to another email
+    statusEl.textContent = `Assigned to ${email}. You can assign it to another email.`;
   }
 
   /* --------------------------------------------------------------
-   * Gallery Rendering (thumbnails grouped by email)
+   * Email Validation & Submit
    * ------------------------------------------------------------ */
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
+    const email = emailInput.value.trim().toLowerCase();
+    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+
+    if (!emailPattern.test(email)) {
+      emailError.hidden = false;
+      emailError.textContent = "Please enter a valid email address.";
+      return;
+    }
+
+    emailError.hidden = true;
+    handleAssign(email);
+  });
+
+  /* --------------------------------------------------------------
+   * Gallery Renderer
+   * ------------------------------------------------------------ */
   function renderGallery() {
     const store = loadStore();
     const entries = Object.entries(store.emailImages);
@@ -224,8 +212,11 @@ console.log("Script loaded & running.");
 
     entries.forEach(([email, urls]) => {
       const details = document.createElement("details");
+      details.open = true; // expanded by default
+
       const summary = document.createElement("summary");
-      summary.innerHTML = `<span class="email">${email}</span><span class="count">(${urls.length} images)</span>`;
+      summary.innerHTML = `<span class="email">${email}</span>
+                           <span class="count">(${urls.length} images)</span>`;
 
       const row = document.createElement("div");
       row.className = "thumb-row";
@@ -248,7 +239,7 @@ console.log("Script loaded & running.");
 
         const delBtn = document.createElement("button");
         delBtn.className = "thumb-delete";
-        delBtn.innerText = "✕";
+        delBtn.textContent = "✕";
         delBtn.addEventListener("click", () => {
           const updated = loadStore();
           updated.emailImages[email].splice(idx, 1);
@@ -256,6 +247,7 @@ console.log("Script loaded & running.");
             delete updated.emailImages[email];
           saveStore(updated);
           renderGallery();
+          statusEl.textContent = "Image removed.";
         });
 
         wrapper.appendChild(img);
@@ -267,12 +259,13 @@ console.log("Script loaded & running.");
       details.appendChild(row);
       galleryEl.appendChild(details);
     });
+
+    populateEmailDropdown();
   }
 
   /* --------------------------------------------------------------
-   * Lightbox Controls
+   * Lightbox
    * ------------------------------------------------------------ */
-
   function openLightbox() {
     lightboxImage.src = slideshowImages[slideshowIndex];
     lightbox.hidden = false;
@@ -309,9 +302,8 @@ console.log("Script loaded & running.");
   });
 
   /* --------------------------------------------------------------
-   * Utility UI Controls
+   * Toolbar Buttons
    * ------------------------------------------------------------ */
-
   skipBtn.addEventListener("click", loadNewImage);
   clearAllBtn.addEventListener("click", () => {
     if (!confirm("Clear all data?")) return;
@@ -321,9 +313,8 @@ console.log("Script loaded & running.");
   });
 
   /* --------------------------------------------------------------
-   * Initial startup
+   * Initialize
    * ------------------------------------------------------------ */
-
   renderGallery();
   loadNewImage();
 })();
