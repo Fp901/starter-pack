@@ -154,6 +154,32 @@
   }
 
   /* --------------------------------------------------------------
+   * Expand the relevant collection when selecting an email
+   * ------------------------------------------------------------ */
+  emailInput.addEventListener("change", () => {
+    const selectedEmail = emailInput.value.trim().toLowerCase();
+    const allDetails = document.querySelectorAll("#gallery details");
+
+    // Collapse all collections first
+    allDetails.forEach((d) => (d.open = false));
+
+    // Find the section matching the selected email
+    const target = document.querySelector(
+      `details[data-email="${selectedEmail}"]`
+    );
+
+    if (target) {
+      // Toggle behavior: if already open, close it
+      if (target.open) {
+        target.open = false;
+      } else {
+        target.open = true;
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+  });
+
+  /* --------------------------------------------------------------
    * Handle Assign
    * ------------------------------------------------------------ */
   function handleAssign(email) {
@@ -176,6 +202,15 @@
     store.emailImages[key].push(currentImageUrl);
     saveStore(store);
     renderGallery();
+
+    // Auto-expand the assigned email's section
+    const targetDetails = document.querySelector(
+      `details[data-email="${email}"]`
+    );
+    if (targetDetails) {
+      targetDetails.open = true;
+      targetDetails.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
 
     // ✅ Keep same image visible so it can be assigned to another email
     statusEl.textContent = `Assigned to ${email}. You can assign it to another email.`;
@@ -212,7 +247,7 @@
 
     entries.forEach(([email, urls]) => {
       const details = document.createElement("details");
-      details.open = true; // expanded by default
+      details.dataset.email = email; // Expand only for current user
 
       const summary = document.createElement("summary");
       summary.innerHTML = `<span class="email">${email}</span>
